@@ -4,7 +4,6 @@ import { ThemeProvider } from '../contexts/ThemeContext';
 import { Header } from '../components/Header';
 import { ChatPanel } from '../components/ChatPanel';
 import { RightPanel } from '../components/RightPanel';
-import { ArrowLeft } from 'lucide-react';
 
 interface ChatMessage {
   id: string;
@@ -190,17 +189,13 @@ const ChatPage: React.FC = () => {
     }
   };
 
-  const handleBackToHome = () => {
-    navigate('/');
-  };
-
   if (isLoading) {
     return (
       <ThemeProvider>
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="min-h-screen bg-background text-foreground flex flex-col">
           <Header />
-          <main className="container mx-auto px-4 py-6">
-            <div className="flex items-center justify-center min-h-[60vh]">
+          <main className="flex-1 container mx-auto px-4 py-6">
+            <div className="flex items-center justify-center h-full min-h-[60vh]">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
                 <p className="text-muted-foreground">Loading chat...</p>
@@ -214,26 +209,16 @@ const ChatPage: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
         <Header />
         
-        <main className="container mx-auto px-4 py-6">
-          {/* Chat Header */}
-          <div className="flex items-center gap-4 mb-6">
-            <button
-              onClick={handleBackToHome}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Home</span>
-            </button>
-            
-            {chatTitle && (
-              <div className="flex-1">
-                <h1 className="text-2xl font-bold">{chatTitle}</h1>
-              </div>
-            )}
-          </div>
+        <main className="flex-1 container mx-auto px-4 py-6">
+          {/* Chat Title */}
+          {chatTitle && (
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold">{chatTitle}</h1>
+            </div>
+          )}
 
           {/* Chat Content */}
           <div className="flex gap-6">

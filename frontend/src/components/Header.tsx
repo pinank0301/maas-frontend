@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
-import { useNavigate } from 'react-router-dom';
-import { LogIn, Menu, X, Home, Star, Info, LogOut, User } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { LogIn, Menu, X, LogOut, User, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'sonner';
 
@@ -13,30 +13,9 @@ export const Header: React.FC<HeaderProps> = ({
   className = ''
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
-
-  // Navigation items
-  const navItems = [
-    {
-      label: 'Home',
-      href: '/',
-      icon: <Home className="w-4 h-4" />,
-      action: () => navigate('/')
-    },
-    {
-      label: 'Features',
-      href: '#features',
-      icon: <Star className="w-4 h-4" />,
-      action: () => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
-    },
-    {
-      label: 'About',
-      href: '#about',
-      icon: <Info className="w-4 h-4" />,
-      action: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
-    }
-  ];
 
   const handleSignInClick = () => {
     navigate('/login');
@@ -48,34 +27,32 @@ export const Header: React.FC<HeaderProps> = ({
     navigate('/login');
   };
 
-  const handleNavClick = (item: any) => {
-    if (item.action) {
-      item.action();
-    } else if (item.href.startsWith('/')) {
-      navigate(item.href);
-    } else {
-      window.location.href = item.href;
-    }
-    setIsMobileMenuOpen(false);
+  const handleBackToHome = () => {
+    navigate('/');
   };
+
+  // Check if we're on a chat page
+  const isChatPage = location.pathname.includes('/chat/');
 
   return (
     <header className={`relative overflow-hidden ${className}`}>
       <div className="flex items-center justify-between p-4 lg:p-6">
-        {/* Navigation */}
-        <nav className="hidden md:flex items-center space-x-1">
-          {navItems.map((item, index) => (
+        {/* Back to Home button for chat pages */}
+        {isChatPage && (
+          <div className="flex items-center">
             <Button
-              key={index}
+              onClick={handleBackToHome}
               variant="ghost"
-              onClick={() => handleNavClick(item)}
-              className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-accent/50 transition-colors"
             >
-              {item.icon && <span className="w-4 h-4">{item.icon}</span>}
-              <span>{item.label}</span>
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Home</span>
             </Button>
-          ))}
-        </nav>
+          </div>
+        )}
+
+        {/* Spacer for non-chat pages */}
+        {!isChatPage && <div></div>}
 
         {/* Mobile menu button */}
         <Button
@@ -119,21 +96,11 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Menu - Empty now but keeping structure */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t bg-background/95 backdrop-blur-sm">
           <nav className="flex flex-col space-y-1 p-4">
-            {navItems.map((item, index) => (
-              <Button
-                key={index}
-                variant="ghost"
-                onClick={() => handleNavClick(item)}
-                className="flex items-center space-x-3 px-3 py-3 text-left justify-start text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
-              >
-                {item.icon && <span className="w-4 h-4">{item.icon}</span>}
-                <span className="font-medium">{item.label}</span>
-              </Button>
-            ))}
+            {/* Navigation items removed */}
           </nav>
         </div>
       )}
