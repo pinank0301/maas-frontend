@@ -408,3 +408,167 @@
 .maas-json-null {
   @apply text-gray-500 dark:text-gray-400;
 }
+
+/* Enhanced Visual Elements */
+.maas-glow-effect {
+  box-shadow: 0 0 20px rgba(var(--primary), 0.3);
+}
+
+.maas-gradient-border {
+  position: relative;
+  background: linear-gradient(45deg, transparent, transparent);
+  border-radius: 12px;
+}
+
+.maas-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, var(--primary), var(--primary-foreground), var(--primary));
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+/* Enhanced Animations */
+@keyframes maas-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes maas-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(var(--primary), 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(var(--primary), 0.4), 0 0 30px rgba(var(--primary), 0.1);
+  }
+}
+
+@keyframes maas-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.maas-animate-float {
+  animation: maas-float 3s ease-in-out infinite;
+}
+
+.maas-animate-glow {
+  animation: maas-glow 2s ease-in-out infinite;
+}
+
+.maas-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: maas-shimmer 2s infinite;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-foreground);
+}
+
+/* Enhanced Focus States */
+.maas-enhanced-focus {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background;
+  transition: all 0.2s ease-in-out;
+}
+
+.maas-enhanced-focus:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(var(--primary), 0.1);
+}
+
+/* Background Patterns */
+.maas-dot-pattern {
+  background-image: radial-gradient(circle, var(--primary) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.1;
+}
+
+.maas-grid-pattern {
+  background-image: 
+    linear-gradient(var(--primary) 1px, transparent 1px),
+    linear-gradient(90deg, var(--primary) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.05;
+}
+
+/* Glassmorphism Effect */
+.maas-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .maas-glass {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced Button Styles */
+.maas-button-primary {
+  @apply bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70;
+  @apply text-primary-foreground font-medium px-6 py-2 rounded-full;
+  @apply shadow-lg hover:shadow-xl transition-all duration-200;
+  @apply transform hover:scale-105 active:scale-95;
+}
+
+.maas-button-secondary {
+  @apply bg-gradient-to-r from-secondary to-secondary/80 hover:from-secondary/90 hover:to-secondary/70;
+  @apply text-secondary-foreground font-medium px-6 py-2 rounded-full;
+  @apply shadow-md hover:shadow-lg transition-all duration-200;
+  @apply transform hover:scale-105 active:scale-95;
+}
+
+/* Loading States */
+.maas-skeleton {
+  background: linear-gradient(90deg, var(--muted) 25%, var(--accent) 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: maas-shimmer 1.5s infinite;
+}
+
+/* Interactive Elements */
+.maas-interactive {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.maas-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--maas-shadow-lg);
+}
+
+.maas-interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--maas-shadow-sm);
+}
