@@ -1,79 +1,149 @@
 # MaaS - Mock as a Service
 
-A dynamic, responsive web application for generating mock APIs instantly. Built with React, TypeScript, and Tailwind CSS.
+A responsive, accessible, production-ready React + TypeScript application for generating mock APIs instantly. Built with shadcn/ui components and modern web standards.
 
 ## Features
 
-### 🎨 Dynamic Layout
-- **Hero Section**: Centered chat interface similar to ChatGPT's design
-- **Smooth Transitions**: Animated layout shift from centered to split-panel view
-- **Responsive Design**: Adapts seamlessly to desktop and mobile devices
+- 🚀 **Instant Mock Generation**: Describe your API requirements and get production-ready mock endpoints
+- 🎨 **Modern UI**: Clean, responsive design with dark/light theme support
+- ♿ **Accessible**: Full keyboard navigation and screen reader support
+- 📱 **Responsive**: Works seamlessly on desktop, tablet, and mobile devices
+- 🎭 **Smooth Animations**: Elegant transitions and micro-interactions
+- 📋 **Copy & Download**: Easy copying and downloading of generated JSON responses
+- 🔧 **TypeScript**: Fully typed for better development experience
 
-### 💬 Chat Interface
-- **Real-time Messaging**: Interactive chat with message history
-- **Smart Input**: Enter key support and input validation
-- **Visual Feedback**: Loading states and smooth animations
+## Tech Stack
 
-### 🚀 Mock API Generation
-- **Instant Generation**: Real-time mock data creation based on user input
-- **Multiple Endpoints**: Automatically generates GET, POST, and other HTTP methods
-- **Visual Progress**: Loading indicators and completion status
-
-### 🎯 Right Panel Features
-- **Endpoint Management**: View and manage generated API endpoints
-- **Response Preview**: Syntax-highlighted JSON responses
-- **Copy Functionality**: One-click copying of endpoints and responses
-- **Tabbed Interface**: Organized view of endpoints and responses
-
-### 🌙 Theme Support
-- **Dark/Light Mode**: Toggle between themes with smooth transitions
-- **Consistent Branding**: Maintains visual consistency across themes
-- **Accessibility**: High contrast support and keyboard navigation
-
-### 📱 Mobile Responsive
-- **Adaptive Layout**: Stacks vertically on mobile devices
-- **Touch-Friendly**: Optimized for touch interactions
-- **Responsive Typography**: Scales appropriately across screen sizes
-
-## Technical Stack
-
-- **React 19** with TypeScript
+- **React 19+** with TypeScript
+- **shadcn/ui** component library
 - **Tailwind CSS** for styling
-- **shadcn/ui** components
-- **Lucide React** for icons
-- **Next Themes** for theme management
 - **Vite** for build tooling
+- **Radix UI** primitives for accessibility
 
 ## Getting Started
 
-1. Install dependencies:
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository and navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Start the development server:
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to the local development URL
+4. Open your browser and navigate to `http://localhost:5173`
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
 ## Usage
 
-1. **Initial State**: The app starts with a centered hero section
-2. **Describe Your API**: Type what kind of API you want to mock
-3. **Send Message**: Press Enter or click the send button
-4. **Watch the Magic**: The layout smoothly transitions to a split-panel view
-5. **Explore Results**: View generated endpoints and responses in the right panel
-6. **Copy & Use**: Copy endpoints or responses for your development needs
+1. **Describe Your API**: Enter a description of the API you want to mock in the chat input
+2. **Generate**: Click "Generate Mock" or press Enter to start generation
+3. **View Results**: Watch the real-time generation progress and explore generated endpoints
+4. **Interact**: Copy JSON responses, download files, or manage endpoints
+
+### Example Prompts
+
+- "Create a user management API with CRUD operations"
+- "Build an e-commerce API with products and orders"
+- "Generate a blog API with posts and comments"
+- "Create a simple todo API with tasks and categories"
+
+## Project Structure
+
+```
+src/
+├── components/          # React components
+│   ├── ui/             # shadcn/ui components
+│   ├── Header.tsx      # App header with theme toggle
+│   ├── ChatPanel.tsx   # Main chat interface
+│   ├── RightPanel.tsx  # Results panel
+│   ├── EndpointList.tsx # Endpoint management
+│   ├── JsonViewer.tsx  # JSON response viewer
+│   └── ProgressIndicator.tsx # Generation progress
+├── contexts/           # React contexts
+│   └── ThemeContext.tsx # Theme management
+├── hooks/              # Custom hooks
+│   └── useMockGenerator.ts # Mock generation logic
+├── lib/                # Utilities
+├── App.tsx            # Main app component
+└── main.tsx           # App entry point
+```
+
+## Key Features
+
+### Responsive Layout
+- **Desktop**: Split view with chat (40%) and results (60%)
+- **Mobile**: Stacked layout with smooth transitions
+- **Tablet**: Adaptive layout based on screen size
+
+### Accessibility
+- Full keyboard navigation support
+- ARIA labels and roles for screen readers
+- High contrast ratios for better visibility
+- Focus management and visual indicators
+
+### Theme Support
+- Light and dark mode toggle
+- System preference detection
+- Persistent theme selection
+- Smooth theme transitions
+
+### Mock Generation
+- Real-time progress indicators
+- Step-by-step generation process
+- Error handling and retry functionality
+- Realistic sample data generation
 
 ## Customization
 
-The app uses CSS custom properties for theming and can be easily customized by modifying the color variables in `src/index.css`.
+### Styling
+Global styles and theme variables are centralized in `src/index.css`. You can customize:
+- Color schemes
+- Animation durations
+- Spacing and typography
+- Component-specific styles
 
-## Accessibility
+### Components
+All components are modular and can be easily customized or extended. Each component includes:
+- TypeScript interfaces
+- Accessibility attributes
+- Responsive design
+- Error boundaries
 
-- Full keyboard navigation support
-- ARIA labels for screen readers
-- High contrast mode support
-- Focus management for better UX
+## Browser Support
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details

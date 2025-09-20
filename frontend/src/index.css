@@ -3,6 +3,24 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* MaaS Custom Styles */
+:root {
+  --maas-transition-duration: 400ms;
+  --maas-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --maas-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --maas-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --maas-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --maas-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --maas-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+[data-theme="dark"] {
+  --maas-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --maas-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --maas-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --maas-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -117,4 +135,135 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* MaaS Layout Transitions */
+.maas-layout-transition {
+  transition: all var(--maas-transition-duration) var(--maas-ease-out);
+}
+
+.maas-chat-panel {
+  transition: width var(--maas-transition-duration) var(--maas-ease-out),
+              transform var(--maas-transition-duration) var(--maas-ease-out);
+}
+
+.maas-right-panel {
+  transition: opacity var(--maas-transition-duration) var(--maas-ease-out),
+              transform var(--maas-transition-duration) var(--maas-ease-out);
+}
+
+.maas-right-panel-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.maas-right-panel-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* MaaS Animations */
+@keyframes maas-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes maas-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes maas-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.maas-animate-pulse {
+  animation: maas-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.maas-animate-slide-up {
+  animation: maas-slide-up 0.3s var(--maas-ease-out);
+}
+
+.maas-animate-fade-in {
+  animation: maas-fade-in 0.3s var(--maas-ease-out);
+}
+
+/* MaaS Focus Styles */
+.maas-focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background;
+}
+
+/* MaaS Hover Effects */
+.maas-hover-lift {
+  transition: transform 0.2s var(--maas-ease-out), box-shadow 0.2s var(--maas-ease-out);
+}
+
+.maas-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--maas-shadow-lg);
+}
+
+/* MaaS Responsive Utilities */
+@media (max-width: 768px) {
+  .maas-mobile-stack {
+    flex-direction: column;
+  }
+  
+  .maas-mobile-full {
+    width: 100%;
+  }
+}
+
+/* MaaS Accessibility */
+.maas-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* MaaS Code Syntax Highlighting */
+.maas-code-block {
+  @apply bg-muted text-muted-foreground rounded-lg p-4 font-mono text-sm overflow-x-auto;
+}
+
+.maas-json-key {
+  @apply text-blue-600 dark:text-blue-400;
+}
+
+.maas-json-string {
+  @apply text-green-600 dark:text-green-400;
+}
+
+.maas-json-number {
+  @apply text-purple-600 dark:text-purple-400;
+}
+
+.maas-json-boolean {
+  @apply text-orange-600 dark:text-orange-400;
+}
+
+.maas-json-null {
+  @apply text-gray-500 dark:text-gray-400;
 }
