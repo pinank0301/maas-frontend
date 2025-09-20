@@ -1,101 +1,116 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
-import { useTheme } from '../contexts/ThemeContext';
-import { Sun, Moon, Zap, Github, LogIn, X } from 'lucide-react';
-import { LoginForm } from './login-form';
+import { useNavigate } from 'react-router-dom';
+import { LogIn, Menu, X, Home, Star, Info } from 'lucide-react';
 
 interface HeaderProps {
   className?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
-  const { theme, toggleTheme } = useTheme();
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+export const Header: React.FC<HeaderProps> = ({ 
+  className = ''
+}) => {
+  const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Navigation items
+  const navItems = [
+    {
+      label: 'Home',
+      href: '/',
+      icon: <Home className="w-4 h-4" />,
+      action: () => navigate('/')
+    },
+    {
+      label: 'Features',
+      href: '#features',
+      icon: <Star className="w-4 h-4" />,
+      action: () => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+    },
+    {
+      label: 'About',
+      href: '#about',
+      icon: <Info className="w-4 h-4" />,
+      action: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+    }
+  ];
+
+  const handleSignInClick = () => {
+    navigate('/login');
+  };
+
+  const handleNavClick = (item: any) => {
+    if (item.action) {
+      item.action();
+    } else if (item.href.startsWith('/')) {
+      navigate(item.href);
+    } else {
+      window.location.href = item.href;
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header className={`relative overflow-hidden ${className}`}>
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5" />
-      
-      <div className="relative flex items-center justify-between p-4 lg:p-6">
-        <div className="flex items-center space-x-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="relative">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/70 rounded-lg flex items-center justify-center shadow-lg">
-                <Zap className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-pulse" />
-            </div>
-            <div>
-              <h1 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
-                MaaS
-              </h1>
-              <p className="text-xs text-muted-foreground font-medium">
-                Mock as a Service
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="flex items-center space-x-3">
-          {/* Theme toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            className="relative h-8 w-8 rounded-full hover:bg-accent/50 transition-all duration-200"
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
-          
-          {/* GitHub link */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 rounded-full hover:bg-accent/50 transition-all duration-200"
-            aria-label="View on GitHub"
-          >
-            <Github className="h-4 w-4" />
-          </Button>
-          
-          {/* Sign in button */}
-          <Button 
-            onClick={() => setIsLoginOpen(true)}
-            className="rounded-full px-4 py-1.5 text-sm bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 shadow-lg hover:shadow-xl"
-          >
-            <LogIn className="h-3 w-3 mr-1.5" />
-            Sign in
-          </Button>
-        </div>
-      </div>
-      
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-2xl" />
-      
-      {/* Login Dialog */}
-      <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
-        <DialogContent className="sm:max-w-md" showCloseButton={false}>
-          <DialogHeader>
-            <DialogTitle className="text-center text-2xl font-bold">
-              Welcome to MaaS
-            </DialogTitle>
+      <div className="flex items-center justify-between p-4 lg:p-6">
+        {/* Navigation */}
+        <nav className="hidden md:flex items-center space-x-1">
+          {navItems.map((item, index) => (
             <Button
+              key={index}
               variant="ghost"
-              size="icon"
-              onClick={() => setIsLoginOpen(false)}
-              className="absolute right-4 top-4 h-6 w-6 rounded-full"
+              onClick={() => handleNavClick(item)}
+              className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
             >
-              <X className="h-4 w-4" />
+              {item.icon && <span className="w-4 h-4">{item.icon}</span>}
+              <span>{item.label}</span>
             </Button>
-          </DialogHeader>
-          <LoginForm />
-        </DialogContent>
-      </Dialog>
+          ))}
+        </nav>
+
+        {/* Mobile menu button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden h-8 w-8 rounded-full hover:bg-accent/50 transition-all duration-200"
+          aria-label="Toggle mobile menu"
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-4 w-4" />
+          ) : (
+            <Menu className="h-4 w-4" />
+          )}
+        </Button>
+        
+        {/* Sign in button */}
+        <Button 
+          onClick={handleSignInClick}
+          className="rounded-full px-6 py-2 text-sm bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 shadow-lg hover:shadow-xl"
+        >
+          <LogIn className="h-4 w-4 mr-2" />
+          Sign in
+        </Button>
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t bg-background/95 backdrop-blur-sm">
+          <nav className="flex flex-col space-y-1 p-4">
+            {navItems.map((item, index) => (
+              <Button
+                key={index}
+                variant="ghost"
+                onClick={() => handleNavClick(item)}
+                className="flex items-center space-x-3 px-3 py-3 text-left justify-start text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
+              >
+                {item.icon && <span className="w-4 h-4">{item.icon}</span>}
+                <span className="font-medium">{item.label}</span>
+              </Button>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
