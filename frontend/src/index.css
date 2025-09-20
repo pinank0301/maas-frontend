@@ -246,7 +246,8 @@
 
 .maas-chat-panel {
   transition: width var(--maas-transition-duration) var(--maas-ease-out),
-              transform var(--maas-transition-duration) var(--maas-ease-out);
+              transform var(--maas-transition-duration) var(--maas-ease-out),
+              height var(--maas-transition-duration) var(--maas-ease-out);
 }
 
 .maas-right-panel {
@@ -262,6 +263,26 @@
 .maas-right-panel-enter-active {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Chat Panel Transitions */
+.maas-chat-form-to-messages {
+  transition: all 0.5s var(--maas-ease-out);
+}
+
+.maas-chat-message {
+  animation: maas-message-appear 0.3s var(--maas-ease-out);
+}
+
+@keyframes maas-message-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* MaaS Animations */
@@ -329,6 +350,24 @@
 
   .maas-mobile-full {
     width: 100%;
+  }
+
+  .maas-chat-panel {
+    height: calc(100vh - 200px) !important;
+  }
+
+  .maas-chat-message {
+    max-width: 90% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .maas-chat-panel {
+    height: calc(100vh - 150px) !important;
+  }
+
+  .maas-chat-message {
+    max-width: 95% !important;
   }
 }
 
