@@ -1,15 +1,13 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { Switch } from './ui/switch';
 import { useTheme } from '../contexts/ThemeContext';
-import { Moon, Sun } from 'lucide-react';
 
 interface HeaderProps {
   className?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme} = useTheme();
 
   return (
     <header className={`flex items-center justify-between p-6 ${className}`}>
@@ -25,14 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ className = '' }) => {
       
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">
-          <Sun className="h-4 w-4" />
-          <Switch
-            checked={theme === 'dark'}
-            onCheckedChange={toggleTheme}
-            aria-label="Toggle dark mode"
-            className="maas-focus-ring"
-          />
-          <Moon className="h-4 w-4" />
+          <Button>Sign in</Button>
         </div>
         <span className="text-sm text-muted-foreground sr-only">
           {theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled'}
