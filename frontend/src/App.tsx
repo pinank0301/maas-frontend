@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Header } from './components/Header';
 import { ChatPanel } from './components/ChatPanel';
 import { RightPanel } from './components/RightPanel';
 import { useMockGenerator, ApiEndpoint } from './hooks/useMockGenerator';
 import { Sparkles, Code, Database, Zap, ArrowRight } from 'lucide-react';
 
-export const App: React.FC = () => {
+const ProtectedApp: React.FC = () => {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const mockGenerator = useMockGenerator();
@@ -43,6 +44,7 @@ export const App: React.FC = () => {
     // TODO: Implement adding new endpoint
     console.log('Add new endpoint');
   };
+
 
   return (
     <ThemeProvider>
@@ -158,4 +160,8 @@ export const App: React.FC = () => {
       </div>
     </ThemeProvider>
   );
+};
+
+export const App: React.FC = () => {
+  return <ProtectedApp />;
 };

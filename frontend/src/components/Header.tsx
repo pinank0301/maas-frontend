@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
-import { LogIn, Menu, X, Home, Star, Info } from 'lucide-react';
+import { LogIn, Menu, X, Home, Star, Info, LogOut, User } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { toast } from 'sonner';
 
 interface HeaderProps {
   className?: string;
@@ -12,6 +14,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
 
   // Navigation items
   const navItems = [
@@ -36,6 +39,12 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   const handleSignInClick = () => {
+    navigate('/login');
+  };
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Signed out successfully");
     navigate('/login');
   };
 
@@ -83,14 +92,31 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </Button>
         
-        {/* Sign in button */}
-        <Button 
-          onClick={handleSignInClick}
-          className="rounded-full px-6 py-2 text-sm bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 shadow-lg hover:shadow-xl"
-        >
-          <LogIn className="h-4 w-4 mr-2" />
-          Sign in
-        </Button>
+        {/* Auth buttons */}
+        {isAuthenticated ? (
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+              <User className="h-4 w-4" />
+              <span>{user?.fullName}</span>
+            </div>
+            <Button 
+              onClick={handleLogout}
+              variant="outline"
+              className="rounded-full px-4 py-2 text-sm"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
+        ) : (
+          <Button 
+            onClick={handleSignInClick}
+            className="rounded-full px-6 py-2 text-sm bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-200 shadow-lg hover:shadow-xl"
+          >
+            <LogIn className="h-4 w-4 mr-2" />
+            Sign in
+          </Button>
+        )}
       </div>
 
       {/* Mobile Navigation Menu */}
