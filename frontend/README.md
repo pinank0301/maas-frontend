@@ -1,69 +1,79 @@
-# React + TypeScript + Vite
+# MaaS - Mock as a Service
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic, responsive web application for generating mock APIs instantly. Built with React, TypeScript, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🎨 Dynamic Layout
+- **Hero Section**: Centered chat interface similar to ChatGPT's design
+- **Smooth Transitions**: Animated layout shift from centered to split-panel view
+- **Responsive Design**: Adapts seamlessly to desktop and mobile devices
 
-## Expanding the ESLint configuration
+### 💬 Chat Interface
+- **Real-time Messaging**: Interactive chat with message history
+- **Smart Input**: Enter key support and input validation
+- **Visual Feedback**: Loading states and smooth animations
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🚀 Mock API Generation
+- **Instant Generation**: Real-time mock data creation based on user input
+- **Multiple Endpoints**: Automatically generates GET, POST, and other HTTP methods
+- **Visual Progress**: Loading indicators and completion status
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎯 Right Panel Features
+- **Endpoint Management**: View and manage generated API endpoints
+- **Response Preview**: Syntax-highlighted JSON responses
+- **Copy Functionality**: One-click copying of endpoints and responses
+- **Tabbed Interface**: Organized view of endpoints and responses
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 🌙 Theme Support
+- **Dark/Light Mode**: Toggle between themes with smooth transitions
+- **Consistent Branding**: Maintains visual consistency across themes
+- **Accessibility**: High contrast support and keyboard navigation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 📱 Mobile Responsive
+- **Adaptive Layout**: Stacks vertically on mobile devices
+- **Touch-Friendly**: Optimized for touch interactions
+- **Responsive Typography**: Scales appropriately across screen sizes
+
+## Technical Stack
+
+- **React 19** with TypeScript
+- **Tailwind CSS** for styling
+- **shadcn/ui** components
+- **Lucide React** for icons
+- **Next Themes** for theme management
+- **Vite** for build tooling
+
+## Getting Started
+
+1. Install dependencies:
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Start the development server:
+```bash
+npm run dev
 ```
+
+3. Open your browser and navigate to the local development URL
+
+## Usage
+
+1. **Initial State**: The app starts with a centered hero section
+2. **Describe Your API**: Type what kind of API you want to mock
+3. **Send Message**: Press Enter or click the send button
+4. **Watch the Magic**: The layout smoothly transitions to a split-panel view
+5. **Explore Results**: View generated endpoints and responses in the right panel
+6. **Copy & Use**: Copy endpoints or responses for your development needs
+
+## Customization
+
+The app uses CSS custom properties for theming and can be easily customized by modifying the color variables in `src/index.css`.
+
+## Accessibility
+
+- Full keyboard navigation support
+- ARIA labels for screen readers
+- High contrast mode support
+- Focus management for better UX
