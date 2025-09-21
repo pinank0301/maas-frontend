@@ -33,8 +33,20 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
     if (message.trim() && !isGenerating) {
       onSubmit(message.trim());
       setMessage('');
+
     }
   };
+
+  useEffect(()=> {
+    if(
+      localStorage.getItem(`chat_0c708dfe-6fc9-46e5-aa33-fa836340bcb8_message`)
+    ){
+      const message =  localStorage.getItem(`chat_0c708dfe-6fc9-46e5-aa33-fa836340bcb8_message`)!
+
+      setMessage(message)
+    }
+
+  },[])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {

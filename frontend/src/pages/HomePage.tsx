@@ -26,11 +26,12 @@ export const HomePage: React.FC = () => {
 
     try {
       // 1. Generate a random UUID
-      const chatId = generateUUID();
+      const chatId = "0c708dfe-6fc9-46e5-aa33-fa836340bcb8";
       
       // 2. Save the user input message in localStorage
       localStorage.setItem(`chat_${chatId}_message`, message.trim());
       
+
       // 3. Redirect user to /chat/:chatid page
       window.location.href = `/chat/${chatId}`;
       

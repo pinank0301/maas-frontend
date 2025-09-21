@@ -111,6 +111,7 @@ const generateChat = async (chatId: string, message: string): Promise<GenerateRe
     })
   });
 
+
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -158,6 +159,8 @@ const ChatPageContent: React.FC = () => {
       
       // Refetch messages to get the updated list
       queryClient.invalidateQueries({ queryKey: ['messages', chatId] });
+      queryClient.invalidateQueries({ queryKey : ["api-endpoints"]})
+
     },
     onError: (error) => {
       console.error('Generate error:', error);
@@ -174,7 +177,12 @@ const ChatPageContent: React.FC = () => {
       generateChat(chatId, message),
     onSuccess: (data) => {
       // Refetch messages to get the updated list
+      console.log("hii")
+      localStorage.removeItem(`chat_${chatId}_message`);
+
       queryClient.invalidateQueries({ queryKey: ['messages', chatId] });
+      queryClient.invalidateQueries({ queryKey : ["api-endpoints"]})
+
     },
     onError: (error) => {
       console.error('Send message error:', error);
