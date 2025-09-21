@@ -3,6 +3,15 @@ import { ThemeProvider } from '../contexts/ThemeContext';
 import { Header } from '../components/Header';
 import { Sparkles, Code, Database, Zap, ArrowRight } from 'lucide-react';
 
+// Function to generate a random UUID
+const generateUUID = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
 export const HomePage: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [message, setMessage] = useState('');
@@ -16,37 +25,15 @@ export const HomePage: React.FC = () => {
     setIsGenerating(true);
 
     try {
-      // Get token from localStorage
-      const token = localStorage.getItem('authToken');
+      // 1. Generate a random UUID
+      const chatId = generateUUID();
       
-      if (!token) {
-        throw new Error('Authentication token not found. Please login first.');
-      }
-
-      const response = await fetch('https://mock-api-2p6p.onrender.com/v1/api/chat/create-chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          message: message
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.success && data.data.chatId) {
-        // Redirect to chat page with the chatId
-        window.location.href = `http://localhost:5173/chat/${data.data.chatId}`;
-      } else {
-        throw new Error('Invalid response format');
-      }
-
+      // 2. Save the user input message in localStorage
+      localStorage.setItem(`chat_${chatId}_message`, message.trim());
+      
+      // 3. Redirect user to /chat/:chatid page
+      window.location.href = `/chat/${chatId}`;
+      
     } catch (error) {
       console.error('Error creating chat:', error);
       alert(`Error: ${error instanceof Error ? error.message : 'Failed to create chat'}`);
@@ -151,4 +138,3 @@ export const HomePage: React.FC = () => {
     </ThemeProvider>
   );
 };
-

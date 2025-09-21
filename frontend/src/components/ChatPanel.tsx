@@ -71,6 +71,40 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  // Format assistant message content to extract readable parts
+  const formatAssistantContent = (content: string) => {
+    // Try to extract meaningful content from assistant responses
+    if (content.includes('Mock') && content.includes('route created successfully')) {
+      // Extract the main message
+      const lines = content.split('\n');
+      const mainMessage = lines.find(line => 
+        line.includes('Mock') && line.includes('route created successfully')
+      );
+      return mainMessage || content;
+    }
+    
+    // If content contains JSON blocks, try to extract readable parts
+    if (content.includes('{') && content.includes('}')) {
+      try {
+        // Split by json blocks and extract readable text
+        const parts = content.split(/json\s*\{[^}]*\}/g);
+        const readableParts = parts
+          .map(part => part.trim())
+          .filter(part => part && !part.startsWith('{'))
+          .join(' ')
+          .trim();
+        
+        if (readableParts) {
+          return readableParts;
+        }
+      } catch (error) {
+        // If parsing fails, return original content
+      }
+    }
+    
+    return content;
+  };
+
   return (
     <Card className={`${className}`}>
       <CardContent className="p-4 md:p-6">
@@ -120,7 +154,12 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
                         )}
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm leading-relaxed">{msg.content}</p>
+                        <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                          {msg.sender === 'assistant' 
+                            ? formatAssistantContent(msg.content) 
+                            : msg.content
+                          }
+                        </p>
                         <p className="text-xs opacity-70 mt-2">
                           {formatTime(msg.timestamp)}
                         </p>
